@@ -1,0 +1,23 @@
+{
+  "name": "node-fexco",
+  "version": "1.0.0",
+  "description": "Spanish Air Traffic Monitoring",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "nodemon": "nodemon server/server.js",
+    "test": "node ./node_modules/selenium-cucumber-js/index.js -s ./step-definitions -x 5000"
+  },
+  "author": {
+    "name": "Antonio Eugenio CASADO BLANCO",
+    "email": "antcasbla@gmail.com"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.1.5",
+    "selenium-cucumber-js": "^1.6.2"
+  },
+  "devDependencies": {
+    "cucumber": "^5.1.0"
+  }
+}
