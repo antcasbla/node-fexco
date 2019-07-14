@@ -20,9 +20,9 @@ async function sendTrafficInfoMessage(trafficInfo) {
             if (error1) {
                 throw error1;
             }
-            var key = 'red.rabbit';
-            //TODO infoMessages incidentMessages
-            var exchange = trafficInfo.incident ? 'topic_logs' : 'topic_logs'
+            var key = trafficInfo.incident ? keyIncident : keyInfo;
+            var exchange = 'topic_logs';
+
             channel.assertExchange(exchange, 'topic', {
                 durable: false
             });
@@ -36,11 +36,10 @@ async function sendTrafficInfoMessage(trafficInfo) {
             console.log(" [x] Sent %s: '%s'", key, msg.toString());
         });
 
-        setTimeout(function() {
-            connection.close();
-            process.exit(0);
-        }, 500);
     });
 }
 
-module.exports = app;
+module.exports = {
+    app,
+    sendTrafficInfoMessage
+};

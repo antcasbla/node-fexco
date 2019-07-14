@@ -38,10 +38,6 @@ async function sendTrafficInfoMessage(trafficInfo) {
             console.log(" [x] Sent %s: '%s'", key, msg.toString());
         });
 
-        setTimeout(function() {
-            connection.close();
-            process.exit(0);
-        }, 500);
     });
 }
 
@@ -88,7 +84,6 @@ app.get('/get-traffic-info/:plane/:originAirport/:destinationAirport/:travelDate
 //   post-traffic-info
 //======================
 
-//TODO Crear nuevo elemento cuando ya existe uno igual
 app.post('/post-traffic-info', (req, res) => {
 
     let body = req.body;
@@ -101,22 +96,38 @@ app.post('/post-traffic-info', (req, res) => {
         incident: body.incident
     });
 
-    trafficInfo.save((err, trafficInfoDB) => {
+    TrafficInfo.findOne({plane: trafficInfo.plane, originAirport: trafficInfo.originAirport, destinationAirport: trafficInfo.destinationAirport, travelDate: trafficInfo.travelDate, deleted: false})
+        .exec((err, trafficInfoDB) => {
+            if(err){
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }
 
-        if(err){
-            return res.status(400).json({
-                ok: false,
-                err
+            //If trafficInfo does already exist
+            if(trafficInfoDB){
+                return res.status(400).json({
+                    ok: false,
+                    err : {
+                        message: 'TrafficInfo already created',
+                    }
+                });
+            } else {
+                trafficInfo.save((err, trafficInfoDB) => {
+
+                    if (err) {
+                        return res.status(400).json({
+                            ok: false,
+                            err
+                        });
+                    }
+
+                    // Publisher AMQP
+                    sendTrafficInfoMessage(trafficInfoDB).then(res.json({ok: true, trafficInfo: trafficInfoDB}), console.error)
+
             });
-        }
-
-        // Publisher AMQP
-        sendTrafficInfoMessage(trafficInfoDB)
-
-        res.json({
-            ok: true,
-            trafficInfo: trafficInfoDB
-        })
+            }
     });
 });
 
@@ -130,14 +141,12 @@ app.put('/put-traffic-info', (req, res) => {
 
     let body = _.pick(req.body, ['plane', 'originAirport', 'destinationAirport', 'travelDate', 'info', 'incident']);
 
-    //TODO DATE
-
     //{new: true} it returns updated object
     //runValidators: true to make validations defined in the model
     TrafficInfo.findOneAndUpdate({plane: body.plane, originAirport: body.originAirport, destinationAirport: body.destinationAirport, travelDate: body.travelDate, deleted: false},
         body,
         {new: true, runValidators: true},
-        (err, trafficInfoBD) => {
+        (err, trafficInfoDB) => {
 
         if(err){
             return res.status(400).json({
@@ -147,7 +156,7 @@ app.put('/put-traffic-info', (req, res) => {
         }
 
         //If trafficInfo does not exist
-        if(!trafficInfoBD){
+        if(!trafficInfoDB){
             return res.status(400).json({
                 ok: false,
                 err : {
@@ -157,12 +166,8 @@ app.put('/put-traffic-info', (req, res) => {
         }
 
         // Publisher AMQP
-        sendTrafficInfoMessage(trafficInfoDB)
+        sendTrafficInfoMessage(trafficInfoDB).then(res.json({ok: true, trafficInfo: trafficInfoDB}), console.error)
 
-        res.json({
-            ok: true,
-            trafficInfo: trafficInfoBD
-        });
     });
 
 })

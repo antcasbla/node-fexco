@@ -13,7 +13,6 @@ const format = require('date-format');
 let TrafficInfo = require('../models/trafficInfo');
 
 // Sending messages
-// Sending messages
 async function sendTrafficInfoMessage(trafficInfo) {
     amqp.connect(process.env.urlAMQP, function(error0, connection) {
         if (error0) {
@@ -39,15 +38,12 @@ async function sendTrafficInfoMessage(trafficInfo) {
             console.log(" [x] Sent %s: '%s'", key, msg.toString());
         });
 
-        setTimeout(function() {
-            connection.close();
-            process.exit(0);
-        }, 500);
     });
 }
 
+// Search messages
 function searchMessages(res, incident){
-    TrafficInfo.find({travelDate: format('yyyy-MM-dd', new Date()), deleted: false, incident: incident}, 'plane, originAirport, destinationAirport, info, travelDate')
+    TrafficInfo.find({travelDate: format('yyyy-MM-dd', new Date()), deleted: false, incident: incident})
         .exec( (err, trafficInfos) => {
             if(err){
                 return res.status(400).json({
@@ -55,12 +51,13 @@ function searchMessages(res, incident){
                     err
                 });
             }
+
             // Publisher AMQP
             trafficInfos.forEach((element) => {
                 sendTrafficInfoMessage(element)
-            });
+            })
 
-            TrafficInfo.count({estado: true}, (err, countTrafficInfos) => {
+            TrafficInfo.countDocuments({travelDate: format('yyyy-MM-dd', new Date()), deleted: false, incident: false}, (err, countTrafficInfos) => {
                 res.json({
                     ok: true,
                     send: countTrafficInfos
@@ -74,34 +71,7 @@ function searchMessages(res, incident){
 //  send-info-messages
 //======================
 app.post("/send-info-messages", (req, res) => {
-    //searchMessages(res,false)
-
-    TrafficInfo.find({travelDate: format('yyyy-MM-dd', new Date()), deleted: false, incident: false}, 'plane, originAirport, destinationAirport, info, travelDate')
-        .exec( (err, trafficInfos) => {
-            if(err){
-                return res.status(400).json({
-                    ok: false,
-                    err
-                });
-            }
-            // Publisher AMQP
-/**            trafficInfos.forEach((element) => {
-                sendTrafficInfoMessage(element)
-            });
-*/
-           // res.json({trafficInfos})
-
-            sendTrafficInfoMessage(trafficInfos[0])
-
-            TrafficInfo.countDocuments({travelDate: format('yyyy-MM-dd', new Date()), deleted: false, incident: false}, (err, countTrafficInfos) => {
-                res.json({
-                    ok: true,
-                    send: countTrafficInfos
-                });
-            });
-
-
-        });
+    searchMessages(res,false)
 });
 
 //======================
