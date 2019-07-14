@@ -22,3 +22,9 @@ And any traveller must receive a notification in real time, whether INFO or INCI
 * OPTIONAL: Endpoints documentation
 * OPTIONAL: Security in endpoints
 * OPTIONAL: User roles
+
+
+<H4>DEPLOYMENT</H4>
+Database on https://mlab.com
+Cloud application platform on https://dashboard.heroku.com/apps
+AMQP on https://www.cloudamqp.com/

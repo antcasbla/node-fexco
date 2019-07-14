@@ -20,6 +20,8 @@ if(process.env.NODE_ENV === 'dev'){
     urlDB = process.env.MONGO_URI;
 }
 
+mongodb://<dbuser>:<dbpassword>@ds249137.mlab.com:49137/air-traffic
+
 process.env.URLDB = urlDB;
 
 //=========================

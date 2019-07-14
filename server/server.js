@@ -1,6 +1,7 @@
 require('./config/config');
 
 const express = require('express')
+
 // Using Node.js `require()`
 const mongoose = require('mongoose');
 
@@ -18,7 +19,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // enable public folder
-app.use(express.static(path.resolve( __dirname , '../client')))
+app.use(express.static(path.resolve( __dirname , '../public')))
+
+//Home page
+app.get('/', (req, res) => {
+    res.render('index');
+})
 
 // enable every controller defined in index.js
 app.use(require('./controllers/index'));

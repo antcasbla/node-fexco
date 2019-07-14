@@ -67,6 +67,7 @@ app.get('/get-traffic-info/:plane/:originAirport/:destinationAirport/:travelDate
                 return res.status(400).json({
                     ok: false,
                     err : {
+                        plane,
                         message: 'TrafficInfo not found',
                     }
                 });

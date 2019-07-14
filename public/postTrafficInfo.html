@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <title>Spanish Air Traffic Monitoring</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Spanish Air Traffic Monitoring</a>
+</nav>
+
+<div>
+    <h1 class="display-4">Create Traffic Info</h1>
+
+    <form action="/post-traffic-info" method="post">
+        <div class="form-row">
+            <label for="plane">Plane</label>
+            <input type="text" class="form-control" id="plane" placeholder="VLG74KB">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="originAirport">Origin Airport</label>
+                <input type="text" class="form-control" id="originAirport" placeholder="SVQ">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="destinationAirport">Destination Airport</label>
+                <input type="text" class="form-control" id="destinationAirport" placeholder="BCN">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="info">Info</label>
+                <input type="text" class="form-control" id="info" placeholder="On time">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="travelDate">Travel Date</label>
+                <input type="text" class="form-control" id="travelDate" placeholder="2019-07-14">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="incident">
+                    <label class="form-check-label" for="incident">
+                        Incident
+                    </label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" value="Submit">Create</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+<script src="assets/js/bootstrap.min.js"></script>
+
+<footer>Antonio Eugenio CASADO BLANCO - 2019 </footer>
+
+</body>
+
+</html>
