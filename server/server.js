@@ -18,12 +18,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // enable public folder
-app.use(express.static(path.resolve( __dirname , '../public')))
+app.use(express.static(path.resolve( __dirname , '../client')))
 
 // enable every controller defined in index.js
 app.use(require('./controllers/index'));
 
-
+// database
 mongoose.connect(process.env.URLDB, (err, res) => {
 
     if(err) throw err;
@@ -32,7 +32,7 @@ mongoose.connect(process.env.URLDB, (err, res) => {
 
 });
 
-
+// port
 app.listen(process.env.PORT, () => {
     console.log('Listening port: ', process.env.PORT);
-})
+});

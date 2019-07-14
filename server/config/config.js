@@ -21,3 +21,16 @@ if(process.env.NODE_ENV === 'dev'){
 }
 
 process.env.URLDB = urlDB;
+
+//=========================
+//        AMQP
+//=========================
+let urlAMQP;
+
+if(process.env.NODE_ENV === 'dev'){
+    urlAMQP = 'amqp://localhost';
+}else{
+    urlAMQP = process.env.AMQP_URI;
+}
+
+process.env.urlAMQP = urlAMQP;
