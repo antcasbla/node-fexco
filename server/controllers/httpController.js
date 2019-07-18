@@ -64,11 +64,10 @@ app.get('/get-traffic-info/:plane/:originAirport/:destinationAirport/:travelDate
 
             //If trafficInfo does not exist
             if(!trafficInfo){
-                return res.status(400).json({
+                return res.status(204).json({
                     ok: false,
                     err : {
-                        plane,
-                        message: 'TrafficInfo not found',
+                        message: 'TrafficInfo not found'
                     }
                 });
             }

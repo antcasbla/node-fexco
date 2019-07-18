@@ -36,3 +36,16 @@ if(process.env.NODE_ENV === 'dev'){
 }
 
 process.env.urlAMQP = urlAMQP;
+
+//=========================
+//        URL HOST
+//=========================
+let urlHost;
+
+if(process.env.NODE_ENV === 'dev'){
+    urlHost = 'https://localhost'+':'+process.env.PORT;
+}else{
+    urlHost = process.env.HOST_URI;
+}
+
+process.env.urlHost = urlHost;

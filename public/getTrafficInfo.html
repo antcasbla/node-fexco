@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
+<script type="javascript" src="./index.js"></script>
 <head>
     <meta charset="UTF-8">
 
@@ -20,7 +20,7 @@
 <div>
     <h1 class="display-4">Obtain Traffic Info</h1>
 
-    <form action="/get-traffic-info" method="get">
+    <form>
         <div class="form-row">
             <label for="plane">Plane</label>
             <input type="text" class="form-control" id="plane" placeholder="VLG74KB">
@@ -37,15 +37,11 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="info">Info</label>
-                <input type="text" class="form-control" id="info" placeholder="On time">
-            </div>
-            <div class="form-group col-md-6">
                 <label for="travelDate">Travel Date</label>
                 <input type="text" class="form-control" id="travelDate" placeholder="2019-07-14">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary" onclick="getTrafficInfo(plane, originAirport, destinationAirport, travelDate)">Search</button>
     </form>
 </div>
 
