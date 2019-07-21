@@ -7,8 +7,7 @@ let TrafficInfo = require('../../server/models/trafficInfo');
 let jsonValues = require('../dummy/trafficInfos.json');
 
 const rpc = axios.create({
-    //baseURL: process.env.urlHost + ":" + process.env.port // I've also tried 'http://localhost:7076'
-    baseURL: 'https://node-fexco.herokuapp.com',
+    baseURL: process.env.urlHost,
     proxy: false
 })
 

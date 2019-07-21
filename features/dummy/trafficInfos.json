@@ -7,5 +7,14 @@
       "travelDate": "2019-07-18",
       "deleted": false,
       "incident": false
-    }
+    },
+  {
+    "plane": "VLG74KB",
+    "originAirport": "BCN",
+    "destinationAirport": "VLC",
+    "info": "On time",
+    "travelDate": "2019-07-21",
+    "deleted": false,
+    "incident": false
+  }
 ]

@@ -64,7 +64,7 @@ app.get('/get-traffic-info/:plane/:originAirport/:destinationAirport/:travelDate
 
             //If trafficInfo does not exist
             if(!trafficInfo){
-                return res.status(204).json({
+                return res.status(202).json({
                     ok: false,
                     err : {
                         message: 'TrafficInfo not found'
@@ -93,13 +93,14 @@ app.post('/post-traffic-info', (req, res) => {
         originAirport: body.originAirport,
         destinationAirport: body.destinationAirport,
         info: body.info,
-        incident: body.incident
+        incident: body.incident,
+        deleted: false
     });
 
-    TrafficInfo.findOne({plane: trafficInfo.plane, originAirport: trafficInfo.originAirport, destinationAirport: trafficInfo.destinationAirport, travelDate: trafficInfo.travelDate, deleted: false})
+    TrafficInfo.findOne(trafficInfo)
         .exec((err, trafficInfoDB) => {
             if(err){
-                return res.status(500).json({
+                return res.status(400).json({
                     ok: false,
                     err
                 });
@@ -107,7 +108,7 @@ app.post('/post-traffic-info', (req, res) => {
 
             //If trafficInfo does already exist
             if(trafficInfoDB){
-                return res.status(204).json({
+                return res.status(202).json({
                     ok: false,
                     err : {
                         message: 'TrafficInfo already created',
@@ -137,7 +138,7 @@ app.post('/post-traffic-info', (req, res) => {
 
 // Only info and incident can be modified
 
-app.put('/put-traffic-info', (req, res) => {
+app.post('/put-traffic-info', (req, res) => {
 
     let body = _.pick(req.body, ['plane', 'originAirport', 'destinationAirport', 'travelDate', 'info', 'incident']);
 
@@ -157,7 +158,7 @@ app.put('/put-traffic-info', (req, res) => {
 
         //If trafficInfo does not exist
         if(!trafficInfoDB){
-            return res.status(204).json({
+            return res.status(202).json({
                 ok: false,
                 err : {
                     message: 'TrafficInfo not found'
@@ -175,7 +176,7 @@ app.put('/put-traffic-info', (req, res) => {
 //======================
 //  delete-traffic-info
 //======================
-app.delete('/delete-traffic-info', (req, res) => {
+app.post('/delete-traffic-info', (req, res) => {
 
     let body = _.pick(req.body, ['plane', 'originAirport', 'destinationAirport', 'travelDate']);
     body.deleted = true;
@@ -196,7 +197,7 @@ app.delete('/delete-traffic-info', (req, res) => {
 
             //If trafficInfo does not exist
             if(!trafficInfoBD){
-                return res.status(204).json({
+                return res.status(202).json({
                     ok: false,
                     err : {
                         message: 'TrafficInfo not found'

@@ -21,27 +21,34 @@
     <h1 class="display-4">Obtain Traffic Info</h1>
 
     <form>
+
         <div class="form-row">
-            <label for="plane">Plane</label>
-            <input type="text" class="form-control" id="plane" placeholder="VLG74KB">
+            <label>Plane</label>
+            <input class="form-control" placeholder="VLG74KB" name="plane"/>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="originAirport">Origin Airport</label>
-                <input type="text" class="form-control" id="originAirport" placeholder="SVQ">
+                <label>Origin Airport</label>
+                <input class="form-control" placeholder="SVQ" name="originAirport"/>
             </div>
             <div class="form-group col-md-6">
-                <label for="destinationAirport">Destination Airport</label>
-                <input type="text" class="form-control" id="destinationAirport" placeholder="BCN">
+                <label>Destination Airport</label>
+                <input class="form-control" placeholder="BCN" name="destinationAirport"/>
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="travelDate">Travel Date</label>
-                <input type="text" class="form-control" id="travelDate" placeholder="2019-07-14">
-            </div>
+            <label>Travel Date</label>
+            <input class="form-control" placeholder="2019-07-14" name="travelDate"/>
         </div>
-        <button type="submit" class="btn btn-primary" onclick="getTrafficInfo(plane, originAirport, destinationAirport, travelDate)">Search</button>
+        <button onclick="function f() {
+            var plane = document.getElementById('plane').value;
+            var originAirport = document.getElementById('originAirport').value;
+            var destinationAirport = document.getElementById('destinationAirport').value;
+            var travelDate = document.getElementById('travelDate').value;
+            var xhttp = new XMLHttpRequest();
+            xhttp.open('GET', '/get-traffic-info/'+plane+'/'+originAirport+'/'+destinationAirport+'/'+travelDate, false);
+            xhttp.send(null);
+        }">Obtain</button>
     </form>
 </div>
 
@@ -49,18 +56,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
 <script src="assets/js/bootstrap.min.js"></script>
-
-<script type="text/javascript">
-
-    function getTrafficInfo() {
-        var plane = document.getElementById('plane').value;
-        var originAirport = document.getElementById('originAirport').value;
-        var destinationAirport = document.getElementById('destinationAirport').value;
-        var travelDate = document.getElementById('travelDate').value;
-        location.href = '/get-traffic-info/'+plane+'/'+originAirport+'/'+destinationAirport+'/'+travelDate;
-    }
-
-</script>
 
 <footer>Antonio Eugenio CASADO BLANCO - 2019 </footer>
 

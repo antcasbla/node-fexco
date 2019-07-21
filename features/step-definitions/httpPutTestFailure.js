@@ -7,8 +7,7 @@ let TrafficInfo = require('../../server/models/trafficInfo');
 let jsonValues = require('../dummy/trafficInfos.json');
 
 const rpc = axios.create({
-    //baseURL: process.env.urlHost + ":" + process.env.port // I've also tried 'http://localhost:7076'
-    baseURL: 'https://node-fexco.herokuapp.com',
+    baseURL: process.env.urlHost,
     proxy: false
 })
 
@@ -30,7 +29,12 @@ When('it is required to MODIFY its new traffic info of a plane {string} which wa
 
 })
 Then('an error for the updating is sent {string}', function (expectedAnswer) {
-    return rpc.put('/put-traffic-info', this.plane, this.originAirport, this.destinationAirport, this.travelDate, this.info);
+    var params = {plane: this.plane,
+        originAirport: this.originAirport,
+        destinationAirport: this.destinationAirport,
+        travelDate: this.travelDate,
+        info: this.info}
+    return rpc.post('/put-traffic-info', params);
 })
 
 After(function() {

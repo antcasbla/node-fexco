@@ -43,7 +43,7 @@ process.env.urlAMQP = urlAMQP;
 let urlHost;
 
 if(process.env.NODE_ENV === 'dev'){
-    urlHost = 'https://localhost'+':'+process.env.PORT;
+    urlHost = 'http://localhost'+':'+process.env.PORT;
 }else{
     urlHost = process.env.HOST_URI;
 }

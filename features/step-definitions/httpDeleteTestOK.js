@@ -7,8 +7,7 @@ let TrafficInfo = require('../../server/models/trafficInfo');
 let jsonValues = require('../dummy/trafficInfos.json');
 
 const rpc = axios.create({
-    //baseURL: process.env.urlHost + ":" + process.env.port // I've also tried 'http://localhost:7076'
-    baseURL: 'https://node-fexco.herokuapp.com',
+    baseURL: process.env.urlHost,
     proxy: false
 })
 
@@ -29,7 +28,11 @@ When('it is required to DELETE the traffic info of a plane {string} which is sto
 
 })
 Then('traffic info is deleted {string}', function (expectedAnswer) {
-    return rpc.delete('/delete-traffic-info', this.plane, this.originAirport, this.destinationAirport, this.travelDate);
+    var params = {plane: this.plane,
+        originAirport: this.originAirport,
+        destinationAirport: this.destinationAirport,
+        travelDate: this.travelDate}
+    return rpc.post('/delete-traffic-info', params);
 })
 
 After(function() {
