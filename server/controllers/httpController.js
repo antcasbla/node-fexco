@@ -107,7 +107,7 @@ app.post('/post-traffic-info', (req, res) => {
 
             //If trafficInfo does already exist
             if(trafficInfoDB){
-                return res.status(400).json({
+                return res.status(204).json({
                     ok: false,
                     err : {
                         message: 'TrafficInfo already created',
@@ -157,7 +157,7 @@ app.put('/put-traffic-info', (req, res) => {
 
         //If trafficInfo does not exist
         if(!trafficInfoDB){
-            return res.status(400).json({
+            return res.status(204).json({
                 ok: false,
                 err : {
                     message: 'TrafficInfo not found'
@@ -196,7 +196,7 @@ app.delete('/delete-traffic-info', (req, res) => {
 
             //If trafficInfo does not exist
             if(!trafficInfoBD){
-                return res.status(400).json({
+                return res.status(204).json({
                     ok: false,
                     err : {
                         message: 'TrafficInfo not found'

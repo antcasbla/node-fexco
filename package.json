@@ -27,6 +27,7 @@
     "path": "^0.12.7",
     "selenium-cucumber-js": "^1.6.2",
     "sinon": "^7.3.2",
+    "sinon-mongoose": "^2.3.0",
     "underscore": "^1.9.1",
     "web-push": "^3.3.5"
   },

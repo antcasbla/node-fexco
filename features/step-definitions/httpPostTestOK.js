@@ -9,8 +9,7 @@ let jsonValues = require('../dummy/trafficInfos.json');
 const rpc = axios.create({
     //baseURL: process.env.urlHost + ":" + process.env.port // I've also tried 'http://localhost:7076'
     baseURL: 'https://node-fexco.herokuapp.com',
-    proxy: false,
-    data: '../dummy/trafficInfos.json'
+    proxy: false
 })
 
 Before(function() {
@@ -22,15 +21,15 @@ Before(function() {
     });
 });
 
-When('it is required to GET the traffic info of a plane {string} which is stored at {string} coming from {string} and going to {string} and the traffic info does not exist', function (plane, travelDate, originAirport, destinationAirport) {
+When('it is required to CREATE its new traffic info of a plane {string} which come from {string} and go to {string} with {string} and the traffic info does not exist', function (plane, originAirport, destinationAirport, info) {
     this.plane = plane
-    this.travelDate = travelDate
     this.originAirport = originAirport
     this.destinationAirport = destinationAirport
+    this.info = info
 
 })
-Then('an error for the getting is sent {string}', function (expectedAnswer) {
-    return rpc.get(`/get-traffic-info/${this.plane}/${this.originAirport}/${this.destinationAirport}/${this.travelDate}`);
+Then('traffic info is created {string}', function (expectedAnswer) {
+    return rpc.post('/post-traffic-info', this.plane, this.originAirport, this.destinationAirport), this.info;
 })
 
 After(function() {

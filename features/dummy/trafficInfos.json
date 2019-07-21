@@ -1,0 +1,11 @@
+[
+    {
+      "plane": "VLG74KB",
+      "originAirport": "SVQ",
+      "destinationAirport": "VLC",
+      "info": "On time",
+      "travelDate": "2019-07-18",
+      "deleted": false,
+      "incident": false
+    }
+]

@@ -22,15 +22,15 @@ Before(function() {
     });
 });
 
-When('it is required to GET the traffic info of a plane {string} which is stored at {string} coming from {string} and going to {string} and the traffic info does not exist', function (plane, travelDate, originAirport, destinationAirport) {
+When('it is required to CREATE its new traffic info of a plane {string} which come from {string} and go to {string} with {string} and the traffic info does exist', function (plane, originAirport, destinationAirport, info) {
     this.plane = plane
-    this.travelDate = travelDate
     this.originAirport = originAirport
     this.destinationAirport = destinationAirport
+    this.info = info
 
 })
-Then('an error for the getting is sent {string}', function (expectedAnswer) {
-    return rpc.get(`/get-traffic-info/${this.plane}/${this.originAirport}/${this.destinationAirport}/${this.travelDate}`);
+Then('an error for the creating is sent {string}', function (expectedAnswer) {
+    return rpc.post('/post-traffic-info', this.plane, this.originAirport, this.destinationAirport, this.info);
 })
 
 After(function() {

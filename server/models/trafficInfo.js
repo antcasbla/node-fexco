@@ -25,6 +25,8 @@ trafficInfoSchema.methods.toJSON = function(){
     let trafficInfo = this;
     let trafficInfoObject = trafficInfo.toObject();
     delete trafficInfoObject.deleted;
+    delete trafficInfoObject.travelDate;
+    delete trafficInfoObject._id;
 
     return trafficInfoObject;
 }
